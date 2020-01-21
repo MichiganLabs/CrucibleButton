@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="GOATButton" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wRa-bj-kgG" customClass="MLButton" customModule="GOATButton" customModuleProvider="target">
+                                <rect key="frame" x="157.5" y="417" width="99" height="68.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="sVY-Sg-SfE" customClass="MLButton" customModule="GOATButton" customModuleProvider="target">
+                                <rect key="frame" x="157.5" y="140.5" width="99" height="190"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="190" id="Snb-tE-uJc"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="alignmentString" value="center"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="favorite_active"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layoutString" value="vertical"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ECf-8j-o3b" customClass="MLButton" customModule="GOATButton" customModuleProvider="target">
+                                <rect key="frame" x="107" y="64" width="200" height="68.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="y30-va-Njj"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="favorite_active"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="alignmentString" value="center"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="biasString" value="trailing"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image2" value="phone"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="my3-pM-u2F" customClass="MLButton" customModule="GOATButton" customModuleProvider="target">
+                                <rect key="frame" x="57" y="338.5" width="300" height="68.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="nNI-rC-S4m"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="favorite_active"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="alignmentString" value="stretch"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image2" value="phone"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Qnf-DP-Fa7" customClass="MLButton" customModule="GOATButton" customModuleProvider="target">
+                                <rect key="frame" x="57" y="495.5" width="300" height="68.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="cph-H6-91V"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="favorite_active"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="biasString" value="trailing"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image2" value="phone"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="coD-pH-TkG" customClass="MLButton" customModule="GOATButton" customModuleProvider="target">
+                                <rect key="frame" x="57" y="592.5" width="300" height="68.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="yh1-5p-iQi"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="favorite_active"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="alignmentString" value="start"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image2" value="phone"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7aS-vM-4WY" customClass="MLButton" customModule="GOATButton" customModuleProvider="target">
+                                <rect key="frame" x="57" y="682.5" width="300" height="68.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="TCd-cT-TYU"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="favorite_active"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image2" value="phone"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="alignmentString" value="end"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="nTt-Fn-8bz" customClass="MLButton" customModule="GOATButton" customModuleProvider="target">
+                                <rect key="frame" x="57" y="788.5" width="300" height="68.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="CJA-mk-9a9"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="favorite_active"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="alignmentString" value="spaceBetween"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image2" value="phone"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="nTt-Fn-8bz" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="2du-0b-TKM"/>
+                            <constraint firstItem="ECf-8j-o3b" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="49k-UG-DnO"/>
+                            <constraint firstItem="my3-pM-u2F" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="6o6-oh-PEI"/>
+                            <constraint firstItem="coD-pH-TkG" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="9zq-ko-mO9"/>
+                            <constraint firstItem="Qnf-DP-Fa7" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Csn-fp-Xyh"/>
+                            <constraint firstItem="sVY-Sg-SfE" firstAttribute="top" secondItem="ECf-8j-o3b" secondAttribute="bottom" constant="8" id="IIG-lS-wqa"/>
+                            <constraint firstItem="wRa-bj-kgG" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="IKr-ZX-fCB"/>
+                            <constraint firstItem="my3-pM-u2F" firstAttribute="top" secondItem="sVY-Sg-SfE" secondAttribute="bottom" constant="8" id="JES-Yv-FPv"/>
+                            <constraint firstItem="coD-pH-TkG" firstAttribute="top" secondItem="Qnf-DP-Fa7" secondAttribute="bottom" constant="28.5" id="Swv-Xb-Kjm"/>
+                            <constraint firstItem="7aS-vM-4WY" firstAttribute="top" secondItem="coD-pH-TkG" secondAttribute="bottom" constant="21.5" id="akq-sT-wja"/>
+                            <constraint firstItem="7aS-vM-4WY" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="aye-LN-LXd"/>
+                            <constraint firstItem="nTt-Fn-8bz" firstAttribute="top" secondItem="7aS-vM-4WY" secondAttribute="bottom" constant="37.5" id="cBM-T1-Lrb"/>
+                            <constraint firstItem="Qnf-DP-Fa7" firstAttribute="top" secondItem="wRa-bj-kgG" secondAttribute="bottom" constant="10" id="dFQ-7H-aFY"/>
+                            <constraint firstItem="sVY-Sg-SfE" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="nTZ-xX-2BC"/>
+                            <constraint firstItem="ECf-8j-o3b" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="ru0-Q2-Dja"/>
+                            <constraint firstItem="wRa-bj-kgG" firstAttribute="top" secondItem="my3-pM-u2F" secondAttribute="bottom" constant="10" id="sKS-jI-uig"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="50.724637681159422" y="20.758928571428569"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="favorite_active" width="22" height="20"/>
+        <image name="phone" width="20" height="20"/>
+    </resources>
+</document>
