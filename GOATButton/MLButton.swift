@@ -142,7 +142,47 @@ class MLButton: UIControl {
         }
     }
 
+    private lazy var animator = UIViewPropertyAnimator(
+        duration: self.animationDuration,
+        dampingRatio: self.dampingRatio,
+        animations: nil
+    )
+
     private var renderer = MLButtonRenderer()
+
+    /// The main title of the button
+    let titleLabel: UILabel = {
+        let label = UILabel()
+//        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Button"
+        label.textAlignment = .center
+
+//        label.setContentHuggingPriority(.required, for: .horizontal)
+//        label.setContentHuggingPriority(.required, for: .vertical)
+
+        label.backgroundColor = .red
+
+        return label
+    }()
+
+    // MARK: Button Title
+    private var titles = [UInt: String]()
+    public func setTitle(_ title: String?, for state: UIControl.State) {
+        self.titles[state.rawValue] = title
+        self.updateTitle()
+    }
+
+    private func updateTitle() {
+        self.titleLabel.text = self.titles[self.state.rawValue]
+    }
+
+    // MARK: Button Center View
+    private var centerViews = [UInt: UIView]()
+    public func setCenterView(_ view: UIView, for state: UIControl.State) {
+        self.centerViews[state.rawValue] = view
+    }
+
+    private var observerBag = [NSKeyValueObservation]()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -154,13 +194,32 @@ class MLButton: UIControl {
         self.commonInit()
     }
 
+    override var isSelected: Bool {
+        didSet {
+            print("is selected")
+        }
+    }
+
+    deinit {
+        // Not sure if this is required or not to clean up our observers
+        self.observerBag.removeAll()
+    }
+
     private func commonInit() {
+//        self.observerBag.append(self.observe(\.state, changeHandler: self.styleHandler))
+
+//        self.isEnabled = false
+
         self.renderer.setup(view: self)
 
         self.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
 
         self.refresh()
     }
+
+//    private func styleHandler(button: MLButton, observer: NSKeyValueObservedChange<UIControl.State>) {
+//        print("test")
+//    }
 
     // ViewDidLoad ?? (awakeFromNib)
     override func prepareForInterfaceBuilder() {
@@ -171,15 +230,23 @@ class MLButton: UIControl {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
         self.commonAwakeFromNib()
     }
 
     private func commonAwakeFromNib() {
-        self.backgroundColor = .green
+        self.renderer.applyBackgroundColors(parentView: self)
     }
 
     private func refresh() {
+        let centerView = self.centerViews[self.state.rawValue] ?? self.titleLabel
+
+        // set views
+        self.renderer.setViews(centerView: centerView, primaryView: UIView(), secondaryView: UIView())
+
+        // set sizing
+
+        // arrange views
+
         self.renderer.arrange(
             layout: self.layout,
             bias: self.bias,
@@ -192,10 +259,6 @@ class MLButton: UIControl {
         )
     }
 
-    open func setTitle(_ title: String?, for state: UIControl.State) {
-
-    }
-
     enum BackgroundDescription {
         case gradient(colors: [UIColor])
         case image(image: UIImage)
@@ -203,5 +266,106 @@ class MLButton: UIControl {
     }
 
     open func setBackgroundDescription(_ description: BackgroundDescription, for state: UIControl.State) {
+
+    }
+}
+
+
+// MARK: Animations
+extension MLButton {
+
+    var scaleFactor: CGFloat { return -0.1 }
+    var animationDuration: TimeInterval { return 0.25 }
+    var dampingRatio: CGFloat { return 0.9 }
+
+//    private func percent(for touch: UITouch?) -> CGFloat {
+//        guard let touch = touch else { return 0 }
+//        let force: CGFloat
+//        if touch.force == 0 {
+//            force = 1
+//        } else {
+//            force = touch.force
+//        }
+//
+//        return log(1 + force)
+//    }
+
+//    private func transform(for touch: UITouch?) -> CGAffineTransform {
+//        return self.scale(for: touch)
+//    }
+//
+//    private func scale(for touch: UITouch?) -> CGAffineTransform {
+//        guard let touch = touch else { return .identity }
+//        let scale = 1 + (self.scaleFactor * self.percent(for: touch))
+//        return CGAffineTransform(scaleX: scale, y: scale)
+//    }
+
+    private func interruptibleAnimations(for touch: UITouch?) {
+        self.backgroundColor = self.state == UIControl.State.normal ? .yellow : .purple
+    }
+
+    private func nonInterruptibleAnimations() {
+        self.titleLabel.textColor = self.state == UIControl.State.normal ? .green : .red
+    }
+
+    private func startNonInterruptibleAnimation() {
+        UIView.transition(with: self.titleLabel, duration: self.animationDuration, options: .transitionCrossDissolve, animations: {
+            self.nonInterruptibleAnimations()
+        }, completion: nil)
+    }
+
+    open override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        let result = super.beginTracking(touch, with: event)
+
+        self.animator.addAnimations {
+            self.interruptibleAnimations(for: touch)
+        }
+        self.animator.startAnimation()
+
+        self.startNonInterruptibleAnimation()
+
+        return result
+    }
+
+    open override func continueTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        let result = super.continueTracking(touch, with: event)
+
+        self.animator.addAnimations {
+            self.interruptibleAnimations(for: touch)
+        }
+
+        if !self.animator.isRunning {
+            self.animator.startAnimation()
+        }
+
+        return result
+    }
+
+    open override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
+        super.endTracking(touch, with: event)
+
+        self.animator.addAnimations {
+            self.interruptibleAnimations(for: touch)
+        }
+
+        if !self.animator.isRunning {
+            self.animator.startAnimation()
+        }
+
+        self.startNonInterruptibleAnimation()
+    }
+
+    open override func cancelTracking(with event: UIEvent?) {
+        super.cancelTracking(with: event)
+
+        self.animator.addAnimations {
+            self.interruptibleAnimations(for: nil)
+        }
+
+        if !self.animator.isRunning {
+            self.animator.startAnimation()
+        }
+
+        self.startNonInterruptibleAnimation()
     }
 }

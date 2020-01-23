@@ -31,18 +31,6 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="layoutString" value="vertical"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ECf-8j-o3b" customClass="MLButton" customModule="GOATButton" customModuleProvider="target">
-                                <rect key="frame" x="107" y="64" width="200" height="68.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="y30-va-Njj"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="favorite_active"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="alignmentString" value="center"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="biasString" value="trailing"/>
-                                    <userDefinedRuntimeAttribute type="image" keyPath="image2" value="phone"/>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="my3-pM-u2F" customClass="MLButton" customModule="GOATButton" customModuleProvider="target">
                                 <rect key="frame" x="57" y="338.5" width="300" height="68.5"/>
                                 <constraints>
@@ -95,6 +83,26 @@
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="image" keyPath="image" value="favorite_active"/>
                                     <userDefinedRuntimeAttribute type="string" keyPath="alignmentString" value="spaceBetween"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image2" value="phone"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5co-Nl-bbn">
+                                <rect key="frame" x="327" y="96" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <state key="highlighted">
+                                    <color key="titleColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ECf-8j-o3b" customClass="MLButton" customModule="GOATButton" customModuleProvider="target">
+                                <rect key="frame" x="107" y="64" width="200" height="68.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="y30-va-Njj"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="favorite_active"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="alignmentString" value="center"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="biasString" value="trailing"/>
                                     <userDefinedRuntimeAttribute type="image" keyPath="image2" value="phone"/>
                                 </userDefinedRuntimeAttributes>
                             </view>

@@ -5,18 +5,20 @@ import UIKit
  That will add a clear separation between the control and its internals.
  */
 class MLButtonRenderer {
+    let isDebug = true
+
     /// Holds all of the contents of the button
-    let containerView: UIView = {
+    private let containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .purple
+//        view.backgroundColor = .purple
 
         view.layoutMargins = .zero
 
         return view
     }()
 
-    let mainStackView: UIStackView = {
+    private let mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -26,35 +28,20 @@ class MLButtonRenderer {
     }()
 
     /// A view that contains the title
-    lazy var titleWrapper: UIView = {
+    private lazy var centerViewWrapper: UIView = {
         let view = UIView()
-        view.backgroundColor = .blue
-
-        view.addSubview(self.titleLabel)
+//        view.backgroundColor = .blue
 
         return view
     }()
 
-    /// The main title of the button
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Button"
-        label.textAlignment = .center
 
-        label.setContentHuggingPriority(.required, for: .horizontal)
-        label.setContentHuggingPriority(.required, for: .vertical)
-
-        label.backgroundColor = .red
-
-        return label
-    }()
 
     /// The main icon of the button
     let iconView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .blue
+//        view.backgroundColor = .blue
 
         let image = UIImage(named: "favorite_active")
         view.image = image
@@ -68,7 +55,7 @@ class MLButtonRenderer {
     let iconView2: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .blue
+//        view.backgroundColor = .blue
 
         let image = UIImage(named: "favorite_active")
         view.image = image
@@ -86,6 +73,35 @@ class MLButtonRenderer {
 
         // Add the stack view to the container view
         self.containerView.addSubview(self.mainStackView)
+    }
+
+    var centerView: UIView? {
+        willSet {
+            if newValue != self.centerView {
+                self.centerView?.removeFromSuperview()
+
+
+                if let view = newValue {
+                    view.translatesAutoresizingMaskIntoConstraints = false
+
+                    // Out of all the elements in the button, the center view (although should condense if it can) should have
+                    // the least amount of compression in comparision to the other elements
+                    view.setContentHuggingPriority(UILayoutPriority(rawValue: 950), for: .horizontal)
+                    view.setContentHuggingPriority(UILayoutPriority(rawValue: 950), for: .vertical)
+
+                    self.centerViewWrapper.addSubview(view)
+                }
+            }
+        }
+    }
+
+    var primaryView = UIView()
+    var secondaryView = UIView()
+
+    func setViews(centerView: UIView, primaryView: UIView, secondaryView: UIView) {
+        self.centerView = centerView
+        self.primaryView = primaryView
+        self.secondaryView = secondaryView
     }
 
     func arrange(
@@ -107,7 +123,7 @@ class MLButtonRenderer {
         self.arrangeItems(bias: bias, primaryImage: image, secondaryImage: image2)
 
         // Constrain the title label
-        self.constrainTitleLabel(alignment: alignment, layout: layout)
+        self.constrainCenterView(alignment: alignment, layout: layout)
 
         self.constraintMainStackView(
             alignment: alignment,
@@ -117,7 +133,15 @@ class MLButtonRenderer {
         )
     }
 
-    private func constrainTitleLabel(alignment: MLButton.Alignment, layout: MLButton.Layout) {
+    func applyBackgroundColors(parentView: UIView) {
+        parentView.backgroundColor = self.isDebug ? .green : .clear
+        self.containerView.backgroundColor = self.isDebug ? .purple : .clear
+        self.centerViewWrapper.backgroundColor = self.isDebug ? .blue : .clear
+    }
+
+    private func constrainCenterView(alignment: MLButton.Alignment, layout: MLButton.Layout) {
+        guard let centerView = self.centerView else { return }
+
         let strongConstraintLayout: NSLayoutConstraint.Axis
         let weakConstraintLayout: NSLayoutConstraint.Axis
 
@@ -130,26 +154,26 @@ class MLButtonRenderer {
         }
 
         ConstraintHelper.constrain(
-            child: self.titleLabel,
+            child: centerView,
             .equalTo,
             to: strongConstraintLayout,
-            edgesOfView: self.titleWrapper
+            edgesOfView: self.centerViewWrapper
         )
 
         let `operator`: ConstraintHelper.Operator = alignment == .stretch ? .equalTo : .greaterThanOrEqualTo
 
         ConstraintHelper.constrain(
-            child: self.titleLabel,
+            child: centerView,
             `operator`,
             to: weakConstraintLayout,
-            edgesOfView: self.titleWrapper
+            edgesOfView: self.centerViewWrapper
         )
 
         if `operator` == .greaterThanOrEqualTo {
             ConstraintHelper.constrain(
-                child: self.titleLabel,
+                child: centerView,
                 to: weakConstraintLayout,
-                edgesOfView: self.titleWrapper,
+                edgesOfView: self.centerViewWrapper,
                 withPriority: .defaultLow
             )
         }
@@ -268,16 +292,18 @@ class MLButtonRenderer {
         case .spaceAround:
             ConstraintHelper.constrain(child: self.mainStackView, .equalTo, toEdgesOfView: self.containerView)
 
-            if layout == .horizontal {
-                self.titleLabel.centerXAnchor
-                    .constraint(equalTo: self.containerView.centerXAnchor)
-                    .priority(.defaultHigh)
-                    .isActive = true
-            } else if layout == .vertical {
-                self.titleLabel.centerYAnchor
-                    .constraint(equalTo: self.containerView.centerYAnchor)
-                    .priority(.defaultHigh)
-                    .isActive = true
+            if let centerView = self.centerView {
+                if layout == .horizontal {
+                    centerView.centerXAnchor
+                        .constraint(equalTo: self.containerView.centerXAnchor)
+                        .priority(.defaultHigh)
+                        .isActive = true
+                } else if layout == .vertical {
+                    centerView.centerYAnchor
+                        .constraint(equalTo: self.containerView.centerYAnchor)
+                        .priority(.defaultHigh)
+                        .isActive = true
+                }
             }
 
         case .spaceBetween:
@@ -319,16 +345,18 @@ class MLButtonRenderer {
                 edgesOfView: self.containerView
             )
 
-            if layout == .horizontal {
-                self.titleLabel.centerXAnchor
-                    .constraint(equalTo: self.containerView.centerXAnchor)
-                    .priority(.defaultHigh)
-                    .isActive = true
-            } else {
-                self.titleLabel.centerYAnchor
-                    .constraint(equalTo: self.containerView.centerYAnchor)
-                    .priority(.defaultHigh)
-                    .isActive = true
+            if let centerView = self.centerView {
+                if layout == .horizontal {
+                    centerView.centerXAnchor
+                        .constraint(equalTo: self.containerView.centerXAnchor)
+                        .priority(.defaultHigh)
+                        .isActive = true
+                } else {
+                    centerView.centerYAnchor
+                        .constraint(equalTo: self.containerView.centerYAnchor)
+                        .priority(.defaultHigh)
+                        .isActive = true
+                }
             }
         }
     }
@@ -341,7 +369,7 @@ class MLButtonRenderer {
                 self.mainStackView.addArrangedSubview(self.iconView)
             }
 
-            self.mainStackView.addArrangedSubview(self.titleWrapper)
+            self.mainStackView.addArrangedSubview(self.centerViewWrapper)
 
             if secondaryImage != nil {
                 self.mainStackView.addArrangedSubview(self.iconView2)
@@ -351,7 +379,7 @@ class MLButtonRenderer {
                 self.mainStackView.addArrangedSubview(self.iconView2)
             }
 
-            self.mainStackView.addArrangedSubview(self.titleWrapper)
+            self.mainStackView.addArrangedSubview(self.centerViewWrapper)
 
             if primaryImage != nil {
                 self.mainStackView.addArrangedSubview(self.iconView)
@@ -368,11 +396,12 @@ class MLButtonRenderer {
             view.removeFromSuperview()
         }
 
-        // Remove all of the constraints between the title and the container
-        ConstraintHelper.removeConstraintsFromView(self.containerView, to: self.titleLabel)
+        if let centerView = self.centerView {
+            // Remove all of the constraints between the title and the container
+            ConstraintHelper.removeConstraintsFromView(self.containerView, to: centerView)
 
-        // Remove all of the constraints between the title and it's wrapper
-        ConstraintHelper.removeConstraintsFromView(self.titleWrapper, to: self.titleLabel)
+            // Remove all of the constraints between the title and it's wrapper
+            ConstraintHelper.removeConstraintsFromView(self.centerViewWrapper, to: centerView)
+        }
     }
 }
-
